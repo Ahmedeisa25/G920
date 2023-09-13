@@ -68,8 +68,32 @@ jobs:
         cd openwrt
         git checkout v23.05.0-rc3
         mkdir -p files/etc/uci-defaults
-        wget https://drive.google.com/file/d/1GmjGintaWoZLgfu-0LaKiJzx2bdi41S_/view?usp=drive_link
-        
+        cd files/etc/uci-defaults
+        wget https://raw.githubusercontent.com/Ahmedeisa25/G920/main/xxx_config -O xxx_config
+        cd ..
+        cd ..
+        cd ..
+        cd package
+        cd base-files
+        cd files
+        cd bin
+        rm config_generate
+        wget https://github.com/Ahmedeisa25/G920/blob/main/config_generate -O config_generate
+        cd ..
+        cd etc
+        rm banner
+        wget https://github.com/Ahmedeisa25/G920/blob/main/banner -O banner
+        cd ..
+        cd ..
+        cd ..
+        cd ..
+        cd target/linux/ramips/dts
+        rm mt7621_hanyang_hyc-g920.dts
+        wget https://github.com/Ahmedeisa25/G920/blob/main/mt7621_hanyang_hyc-g920.dts -O mt7621_hanyang_hyc-g920.dts
+        cd ..
+        cd ..
+        cd ..
+        cd ..
         cd package
         git clone https://github.com/jerrykuku/luci-theme-argon.git
         git clone https://github.com/xiaorouji/openwrt-passwall2
