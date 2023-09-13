@@ -66,6 +66,28 @@ jobs:
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
+        git checkout v23.05.0-rc3
+        mkdir -p files/etc/uci-defaults
+        # Create and edit the custom-wireless.conf file
+        cat <<EOL > files/etc/uci-defaults/custom-wireless.conf
+# Enable wireless radios
+uci set wireless.radio0.disabled='0'
+uci set wireless.radio1.disabled='0'
+
+# Configure the wireless network for radio0
+uci set wireless.@wifi-iface[0].ssid='openwrt'
+uci set wireless.@wifi-iface[0].key='123@123@'
+uci set wireless.@wifi-iface[0].encryption='psk2'
+
+# Configure the wireless network for radio1
+uci set wireless.@wifi-iface[1].ssid='openwrt'
+uci set wireless.@wifi-iface[1].key='123@123@'
+uci set wireless.@wifi-iface[1].encryption='psk2'
+
+# Save the changes
+uci commit wireless
+EOL
+        
         cd package
         git clone https://github.com/jerrykuku/luci-theme-argon.git
         git clone https://github.com/xiaorouji/openwrt-passwall2
@@ -73,6 +95,7 @@ jobs:
         git clone https://github.com/xiaorouji/openwrt-passwall-packages
         sudo apt install subversion
         svn export https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
+        cd ..
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
